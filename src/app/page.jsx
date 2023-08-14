@@ -1,7 +1,7 @@
 "use client";
 import { signIn, signOut, useSession, getSession } from "next-auth/react";
 import Image from "next/image";
-import LoadingSession from "./components/LoadingSession";
+import LoadingSession from "../components/LoadingSession";
 import Link from "next/link";
 
 export default function Home() {
@@ -25,19 +25,28 @@ export default function Home() {
   return (
     <>
       {session && (
-        <section className="md:flex items-center justify-end gap-2 absolute top-6 right-6 hidden">
-          <span className="font-semibold text-lg">Bienvenid@!</span>
-          <div className="inline-flex items-center justify-center rounded-full shadow-lg dark:bg-slate-800 bg-slate-100 w-12 h-12">
-            <span className="font-medium text-gray-600 dark:text-gray-300">
-              {getUsernameLetters()}
-            </span>
+        <section className="md:flex flex-col gap-2 absolute top-6 right-6 hidden">
+          <div className="md:flex items-center justify-end gap-2 ">
+            <span className="font-semibold text-lg">Bienvenid@!</span>
+            <div className="inline-flex items-center justify-center rounded-full shadow-lg dark:bg-slate-800 bg-slate-100 w-12 h-12">
+              <Image
+                src={session.user.image}
+                alt="Imagen de usuario"
+                width={48}
+                height={48}
+                className="rounded-full"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col items-end">
+            <h1>Salir</h1>
           </div>
         </section>
       )}
 
       <div className="flex flex-col items-start justify-start px-6 pt-6">
         <h1 className="max-w-md  font-extrabold text-6xl">
-          Administración de ingresos y gastos
+          Administración de <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">ingresos y gastos</span>
         </h1>
         <h3 className=" text-2xl pt-6 w-1/2 text-yellow-400">
           Monitorea tus ingresos y gastos por cada mes, podras visualizar
@@ -66,9 +75,10 @@ export default function Home() {
                 Ingresar con Github
               </button>
             </div>
-            <div 
-            className="mt-6 shadow-lg rounded-lg p-6 right-1 bg-transparent 
-            border-slate-800 border bg-slate-800 text-white font-semibold w-full md:w-auto">
+            <div
+              className="mt-6 shadow-lg rounded-lg p-6 right-1 bg-transparent 
+            border-slate-800 border bg-slate-800 text-white font-semibold w-full md:w-auto"
+            >
               <span>Para usar la aplicación primero debes iniciar sesión.</span>
             </div>
           </>
@@ -76,12 +86,19 @@ export default function Home() {
         {session && (
           <>
             <div className="flex w-full md:w-auto ">
-              <Link className="flex items-center gap-2 p-4 bg-white w-full md:w-auto  text-slate-900 font-bold 
+              <Link
+                className="flex items-center gap-2 p-4 bg-white w-full md:w-auto  text-slate-900 font-bold 
               rounded-lg shadow-xl hover:shadow-2xl transition duration-200 ease-in-out 
               transform hover:-translate-y-0 hover:scale-110 mt-6"
-              href="/gastos">
+                href="/gastos"
+              >
                 Esta todo listo! Usar la aplicación
-                <Image src="/arrow-right.svg" alt="Google" width={32} height={32} />
+                <Image
+                  src="/arrow-right.svg"
+                  alt="Google"
+                  width={32}
+                  height={32}
+                />
               </Link>
             </div>
           </>

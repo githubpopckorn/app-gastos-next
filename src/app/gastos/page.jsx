@@ -1,16 +1,29 @@
-import Image from "next/image";
+import { getServerSession } from "next-auth/next";
 import Link from "next/link";
-import LeftArrow from "../components/LeftArrow";
+import { ArrowLeft } from "../../assets/Icons";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { GastosForm } from "../../components/Gastos/GastosForm";
+import { GastosList } from "../../components/Gastos/GastosList";
 
-export default function Gastos() {
+export default async function Gastos() {
+  const user = await getServerSession(authOptions);
+  console.log(user);
+
   return (
-    <>
-      <section className="flex justify-start items-center">
-        <Link href="/" className="flex gap-x-2 tansition hover:contrast-125 hover:scale-105 text-yellow-300">
-          <Image src="/arrow-left.svg" alt="Regresar" width={24} height={24} />
-          <span className="font-semibold text-lg">Regresar</span>
+    <main className="flex flex-col gap-y-4">
+      <section className="flex justify-between items-center">
+        <Link
+          href="/"
+          className="flex gap-x-1 tansition hover:contrast-125 hover:scale-105 items-center"
+        >
+          <ArrowLeft className="w-6 h-6" />
+          <span className="font-semibold text-lg">Inicio</span>
         </Link>
+        <GastosForm />
       </section>
-    </>
+      <section className="flex flex-col w-full">
+        <GastosList />
+      </section>
+    </main>
   );
 }
