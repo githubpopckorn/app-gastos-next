@@ -1,6 +1,9 @@
+import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react'
 
 export function useGastosForm() {
+  const router = useRouter();
   const [gastos, setGastos] = useState({
     monto: "",
     fecha: "",
@@ -25,6 +28,7 @@ export function useGastosForm() {
       if (!response.ok) {
         throw new Error("Error al guardar los datos");
       }
+      router.refresh();
       handleCloseModal();
     } catch (error) {
       console.log(error);

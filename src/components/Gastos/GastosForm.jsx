@@ -3,8 +3,16 @@ import { Button, Label, Modal, TextInput, Select } from "flowbite-react";
 import { useGastosForm } from "../../hooks/useGastosForm";
 
 export function GastosForm() {
-
-  const { gastos, handleChange, errors, props, handleSubmit, handleCloseModal, loading } = useGastosForm();
+  const {
+    gastos,
+    handleChange,
+    errors,
+    props,
+    handleSubmit,
+    handleCloseModal,
+    loading,
+  } = useGastosForm();
+  
   return (
     <>
       <Button

@@ -4,10 +4,15 @@ import { ArrowLeft } from "../../assets/Icons";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { GastosForm } from "../../components/Gastos/GastosForm";
 import { GastosList } from "../../components/Gastos/GastosList";
+import { headers } from "next/dist/client/components/headers";
 
 export default async function Gastos() {
   const user = await getServerSession(authOptions);
-  console.log(user);
+  const { data: gastos } = await fetch("http://localhost:3000/api/gastos", {
+    method: "GET",
+    headers: headers(),
+  }).then((response) => response.json());
+  console.log(gastos);
 
   return (
     <main className="flex flex-col gap-y-4">
@@ -22,7 +27,7 @@ export default async function Gastos() {
         <GastosForm />
       </section>
       <section className="flex flex-col w-full">
-        <GastosList />
+        <GastosList gastos={gastos} />
       </section>
     </main>
   );
